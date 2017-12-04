@@ -7,6 +7,10 @@ Install guide:
 
 - To be done
 
+Commands:
+
+- To be done
+
 Stack:
 
 - Python 3.6
