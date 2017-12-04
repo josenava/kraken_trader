@@ -1,0 +1,3 @@
+graft kraken_trader/templates
+graft kraken_trader/static
+include kraken_trader/schema.sql
