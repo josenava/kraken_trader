@@ -5,11 +5,20 @@ Flask app to check your kraken portfolio and trade.
 
 Install guide:
 
-- To be done
+`pip install .`
 
 Commands:
 
-- To be done
+- Create a database and run the following command to create the tables.
+`flask init_db`
+
+- Import the currencies from kraken
+`flask kraken_importer_cli --import_type=currencies`
+
+- Import currency values from kraken
+`flask kraken_importer_cli --import_type=values`
+
+
 
 Stack:
 
