@@ -3,7 +3,8 @@
 import _mysql_exceptions
 import click
 from kraken_trader.components.kraken_importer import KrakenImporter
-from flask import Flask
+from kraken_trader.components.crypto_currency_service import CryptoCurrencyService
+from flask import Flask, render_template
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -39,6 +40,14 @@ def kraken_importer_command(import_type, fiat):
     else:
         print('Wrong option')
         return 1
+
+@app.route('/')
+def show_prices():
+    crypto_currency_service = CryptoCurrencyService(mysql)
+
+    (updated_at, last_values) = crypto_currency_service.get_last_values()
+    print(last_values)
+    return render_template('show_prices.html', updated_at=updated_at, crypto_currencies=last_values)
 
 def main():
     app.run()

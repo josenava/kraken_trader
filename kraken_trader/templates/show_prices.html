@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+<section>
+    <h4>Check the prices from kraken</h4>
+    <p>Last updated at: {{ updated_at }}</p>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Currency</th>
+                <th>Current price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for crypto_currency_name, value in crypto_currencies.items() %}
+            <tr>
+                <td>{{ crypto_currency_name }}</td>
+                <td>{{ value|round(4) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+</section>
+{% endblock %}
