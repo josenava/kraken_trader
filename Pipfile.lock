@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b886f70bb09a4dc7b21e5dfd735d91c1f46c732edab67fe76d83f957a8e7402c"
+            "sha256": "bfefd14f3549cbdab59a9a7d4a4d710494d7856e5fb9693dba36301d9c5b2e82"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -9,9 +9,9 @@
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "4.14.2-1-macbook",
+            "platform_release": "4.14.4-1-macbook",
             "platform_system": "Linux",
-            "platform_version": "#1 SMP PREEMPT Fri Dec 1 20:29:28 CET 2017",
+            "platform_version": "#1 SMP PREEMPT Sun Dec 10 12:33:44 CET 2017",
             "python_full_version": "3.6.3",
             "python_version": "3.6",
             "sys_platform": "linux"
@@ -47,6 +47,13 @@
                 "sha256:f15516df478d5a56180fbf80e68f206010e6d160fc39fa508b65e035fd75130b"
             ],
             "version": "==6.7"
+        },
+        "daiquiri": {
+            "hashes": [
+                "sha256:a004257e25e55b9bfbda2e1e225b4e9ff1e3038a36d427c596816b204cc89677",
+                "sha256:c86b1afc6d39937f21405c3337e67174d2258e7c55834b38581c8247bd4a57a5"
+            ],
+            "version": "==1.3.0"
         },
         "flask": {
             "hashes": [
@@ -119,10 +126,10 @@
         },
         "werkzeug": {
             "hashes": [
-                "sha256:e8549c143af3ce6559699a01e26fa4174f4c591dbee0a499f3cd4c3781cdec3d",
-                "sha256:903a7b87b74635244548b30d30db4c8947fe64c5198f58899ddcd3a13c23bb26"
+                "sha256:f3000aa146ce8a9da8ca3e978e0e931c2a58eb56c323a5efb6b4307f7832b549",
+                "sha256:6246e5fc98a505824113fb6aca993d45ea284a2bcffdc2c65d0c538e53e4abd3"
             ],
-            "version": "==0.12.2"
+            "version": "==0.13"
         }
     },
     "develop": {}

@@ -46,8 +46,11 @@ def show_prices():
     crypto_currency_service = CryptoCurrencyService(mysql)
 
     (updated_at, last_values) = crypto_currency_service.get_last_values()
-    print(last_values)
-    return render_template('show_prices.html', updated_at=updated_at, crypto_currencies=last_values)
+    return render_template(
+        'show_prices.html',
+        updated_at=updated_at,
+        crypto_currencies=last_values
+    )
 
 def main():
     app.run()
