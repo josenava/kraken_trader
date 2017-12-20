@@ -3,14 +3,14 @@ from flask_mysqldb import MySQL
 class DbConnector(MySQL):
     def __init__(self, connection_params, logger=None):
         super().__init__(connection_params)
-        # self.logger = logger
+        self.logger = logger
         self._cursor = None
 
     def execute(self, query):
         '''
         Logs the query and executes it
         '''
-        # self.logger.debug(query)
+        self.logger.info(query)
 
         return self.cursor.execute(query)
 
@@ -18,7 +18,7 @@ class DbConnector(MySQL):
         '''
         Logs executemany query and runs it
         '''
-        # self.logger.debug(query)
+        self.logger.info(query)
 
         return self.cursor.executemany(query, query_params)
 
@@ -27,7 +27,7 @@ class DbConnector(MySQL):
         Closes the connection if the cursor was created
         '''
         return self.cursor.close()
-    
+
     @property
     def cursor(self):
         if self._cursor is None:

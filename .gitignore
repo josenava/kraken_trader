@@ -4,3 +4,5 @@ kraken_trader/components/__pycache__
 kraken_trader.egg-info
 .env
 kraken_trader/config.cfg
+kraken_trader/components/db/__pycache__/
+kraken_trader/components/logger/__pycache__/

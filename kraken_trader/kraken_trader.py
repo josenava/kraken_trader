@@ -4,13 +4,14 @@ import _mysql_exceptions
 import click
 from kraken_trader.components.kraken_importer import KrakenImporter
 from kraken_trader.components.crypto_currency_service import CryptoCurrencyService
-from kraken_trader.components.db_connector import DbConnector
+from kraken_trader.components.db.db_connector import DbConnector
+from kraken_trader.components.logger.query_logger import QueryLogger
 from flask import Flask, render_template
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 app.config.from_envvar('FLASK_SETTINGS')
-db_connector = DbConnector(app)
+db_connector = DbConnector(app, QueryLogger(app.config['QUERY_LOG_FILE']))
 
 
 @app.cli.command('init_db')
@@ -23,9 +24,6 @@ def initdb_command():
         db_connector.execute(query)
     except _mysql_exceptions.OperationalError as error:
         print('Something went wrong: {}'.format(error))
-    finally:
-        db_connector.close()
-
 
 @app.cli.command('kraken_importer_cli')
 @click.option('--import_type', type=click.Choice(['currencies', 'values']))

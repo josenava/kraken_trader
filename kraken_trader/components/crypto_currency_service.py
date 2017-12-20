@@ -3,15 +3,13 @@
 class CryptoCurrencyService():
     
     def __init__(self, db_connection):
-        self.db_connection = db_connection.connection
+        self.db_connection = db_connection
     
     def get_last_values(self):
         query = self.__build_select_last_values_query()
-        db_cursor = self.db_connection.cursor()
+        self.db_connection.execute(query)
 
-        db_cursor.execute(query)
-
-        return self.__parse_last_values(db_cursor.fetchall())
+        return self.__parse_last_values(self.db_connection.cursor.fetchall())
     
     def __build_select_last_values_query(self):
         return '''
