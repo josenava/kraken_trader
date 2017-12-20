@@ -8,9 +8,9 @@ class KrakenImporter():
     '''
     Takes care of getting data from KrakenAPI
     '''
-    def __init__(self, api_key, api_secret, db):
+    def __init__(self, api_key, api_secret, db_connector):
         self.kraken_api = krakenex.API(api_key, api_secret)
-        self.db_connection = db.connection
+        self.db_connector = db_connector
 
     def currencies(self):
         '''
@@ -18,7 +18,7 @@ class KrakenImporter():
         '''
         try:
             response = self.kraken_api.query_public('AssetPairs')
-            db_cursor = self.db_connection.cursor()
+            
             query_params = [
                 (crypto_currency_meta_data['base'],
                  crypto_currency_code,
@@ -27,8 +27,7 @@ class KrakenImporter():
             ]
 
             query = self.__build_insert_crypto_currency_query()
-            db_cursor.executemany(query, query_params)
-            self.db_connection.commit()
+            self.db_connector.executemany(query, query_params)
         except HTTPError as http_error:
             print('The API raised the following http_error: {}'.format(http_error))
         except _mysql_exceptions.DatabaseError as db_error:
@@ -53,15 +52,12 @@ class KrakenImporter():
             ]
 
             query = self.__build_insert_crypto_currency_historical_value_query()
-            db_cursor = self.db_connection.cursor()
 
-            db_cursor.executemany(query, query_params)
-            self.db_connection.commit()
+            self.db_connector.executemany(query, query_params)
         except HTTPError as http_error:
             print('The API returned the following error: {}'.format(http_error))
         except _mysql_exceptions.DatabaseError as db_error:
             print('The database threw the following error: {}'.format(db_error))
-
 
     def __get_fiat_currency_pairs(self, fiat):
         """
@@ -74,9 +70,8 @@ class KrakenImporter():
                 AND code NOT LIKE '%.d%'
             '''.format(fiat)
 
-            db_cursor = self.db_connection.cursor()
-            db_cursor.execute(select_query)
-            return dict(db_cursor.fetchall())
+            self.db_connector.execute(select_query)
+            return dict(self.db_connector.cursor.fetchall())
         except _mysql_exceptions.DatabaseError as error:
             print('Something went wrong, please check: {}'.format(error))
 

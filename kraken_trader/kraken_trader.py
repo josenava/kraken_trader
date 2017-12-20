@@ -4,27 +4,27 @@ import _mysql_exceptions
 import click
 from kraken_trader.components.kraken_importer import KrakenImporter
 from kraken_trader.components.crypto_currency_service import CryptoCurrencyService
+from kraken_trader.components.db_connector import DbConnector
 from flask import Flask, render_template
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 app.config.from_envvar('FLASK_SETTINGS')
-mysql = MySQL(app)
+db_connector = DbConnector(app)
 
 
 @app.cli.command('init_db')
 def initdb_command():
     try:
-        cursor = mysql.connection.cursor()
         with app.open_resource('schema.sql', mode='r') as f:
             query = f.read()
             print("'Running query: {}'".format(query))
 
-        cursor.execute(query)
+        db_connector.execute(query)
     except _mysql_exceptions.OperationalError as error:
         print('Something went wrong: {}'.format(error))
     finally:
-        cursor.close()
+        db_connector.close()
 
 
 @app.cli.command('kraken_importer_cli')
@@ -32,7 +32,7 @@ def initdb_command():
 @click.option('--fiat', default='EUR')
 def kraken_importer_command(import_type, fiat):
     importer = KrakenImporter(
-        app.config['KRAKEN_API_KEY'], app.config['KRAKEN_API_SECRET'], mysql)
+        app.config['KRAKEN_API_KEY'], app.config['KRAKEN_API_SECRET'], db_connector)
     if import_type == 'currencies':
         return importer.currencies()
     elif import_type == 'values':
@@ -43,7 +43,7 @@ def kraken_importer_command(import_type, fiat):
 
 @app.route('/')
 def show_prices():
-    crypto_currency_service = CryptoCurrencyService(mysql)
+    crypto_currency_service = CryptoCurrencyService(db_connector)
 
     (updated_at, last_values) = crypto_currency_service.get_last_values()
     return render_template(
