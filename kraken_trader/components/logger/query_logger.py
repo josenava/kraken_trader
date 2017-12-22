@@ -1,14 +1,17 @@
 import logging
 import sys
-import daiquiri
 
 class QueryLogger(object):
-    def __init__(self, file_path):
-        daiquiri.setup(level=logging.INFO, outputs=(
-            daiquiri.output.Stream(sys.stdout),
-            daiquiri.output.File(file_path)
-        ))
-        self.logger = daiquiri.getLogger(__name__, subsystem="Queries")
+    def __init__(self, logger, file_path):
+        self.logger = logger
+        # create file handler which logs even debug messages
+        fh = logging.FileHandler(file_path)
+        fh.setLevel(logging.DEBUG)
+        formatter = logging.Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        fh.setFormatter(formatter)
+
+        self.logger.addHandler(fh)
 
     def info(self, message):
         self.logger.info(message)

@@ -11,7 +11,7 @@ from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 app.config.from_envvar('FLASK_SETTINGS')
-db_connector = DbConnector(app, QueryLogger(app.config['QUERY_LOG_FILE']))
+db_connector = DbConnector(app, QueryLogger(app.logger, app.config['QUERY_LOG_FILE']))
 
 
 @app.cli.command('init_db')
@@ -19,7 +19,6 @@ def initdb_command():
     try:
         with app.open_resource('schema.sql', mode='r') as f:
             query = f.read()
-            print("'Running query: {}'".format(query))
 
         db_connector.execute(query)
     except _mysql_exceptions.OperationalError as error:

@@ -10,7 +10,7 @@ class DbConnector(MySQL):
         '''
         Logs the query and executes it
         '''
-        self.logger.info(query)
+        self.logger.debug(query)
 
         return self.cursor.execute(query)
 
@@ -18,7 +18,7 @@ class DbConnector(MySQL):
         '''
         Logs executemany query and runs it
         '''
-        self.logger.info(query)
+        self.logger.debug(query)
 
         return self.cursor.executemany(query, query_params)
 
