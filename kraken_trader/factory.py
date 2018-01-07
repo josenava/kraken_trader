@@ -8,7 +8,7 @@ import click
 _APP_NAME = 'kraken_trader'
 
 def create_app(config=None):
-    app = Flask('kraken_trader')
+    app = Flask(_APP_NAME)
     app.config.from_envvar('FLASK_SETTINGS')
 
     # db config
