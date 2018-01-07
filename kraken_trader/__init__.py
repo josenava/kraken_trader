@@ -1,1 +1,2 @@
-from .kraken_trader import app
+from kraken_trader.factory import create_app
+app = create_app()

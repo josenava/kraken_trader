@@ -1,8 +1,8 @@
 from flask_mysqldb import MySQL
 
 class DbConnector(MySQL):
-    def __init__(self, connection_params, logger=None):
-        super().__init__(connection_params)
+    def __init__(self, logger=None):
+        super().__init__()
         self.logger = logger
         self._cursor = None
 

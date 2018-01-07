@@ -19,7 +19,7 @@ INNER JOIN (SELECT MAX(created_at) as max_created_at, crypto_currency_id AS max_
 ON max_chv.max_crypto_id = chv.crypto_currency_id
 WHERE chv.created_at = max_chv.max_created_at
 GROUP BY c.id
-ORDER BY c.id ASC
+ORDER BY c.name ASC
         '''
 
     def __parse_last_values(self, values):
